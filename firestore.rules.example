@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Replace with the actual Firebase Authentication UID for the authorized admin.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.uid == "REPLACE_WITH_ADMIN_UID";
+    }
+
+    // Public league pages may read published league data.
+    match /{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

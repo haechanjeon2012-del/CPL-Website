@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="CPL — Cheonjung Premier League">
+  <title>CPL 2.0 | Cheonjung Premier League</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="CPL 홈">
+      <span class="brand-mark">C</span>
+      <span><strong>CPL 2.0</strong><small>CHEONJUNG PREMIER LEAGUE</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기" aria-expanded="false">☰</button>
+    <nav id="mainNav" class="main-nav">
+      <a href="#home" class="nav-link active">홈</a>
+      <a href="#games" class="nav-link">경기</a>
+      <a href="#standings" class="nav-link">순위</a>
+      <a href="#players" class="nav-link">선수</a>
+      <a href="#playoffs" class="nav-link">포스트시즌</a>
+      <a href="#admin" class="nav-link admin-nav">관리자 데모</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero page-section">
+      <div class="hero-copy">
+        <p class="eyebrow">ONE SEASON. ONE CHAMPION.</p>
+        <h1>천중 프리미어리그<br><span>CPL 2.0</span></h1>
+        <p class="hero-desc">모든 경기에는 기록이 남고,<br>모든 기록은 순위가 된다.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#standings">현재 순위 보기</a>
+          <a class="button secondary" href="#games">경기 결과</a>
+        </div>
+      </div>
+      <div class="hero-score">
+        <div class="score-top"><span class="live-dot"></span> LEAGUE CENTER <span class="demo-tag">DEMO</span></div>
+        <div class="score-teams">
+          <div class="team-tile"><span class="team-emblem">HC</span><strong>해찬</strong></div>
+          <div class="score-mid"><span class="score-label">최근 기록 예시</span><strong>1 <i>:</i> 0</strong><small>연습경기 · 예시 데이터</small></div>
+          <div class="team-tile"><span class="team-emblem alt">SH</span><strong>시환</strong></div>
+        </div>
+        <div class="score-bottom"><span>공식 경기 데이터 연결 전</span><span>SEASON HUB</span></div>
+      </div>
+    </section>
+
+    <section class="section page-section" id="standings">
+      <div class="section-heading"><div><p class="eyebrow">LEAGUE TABLE</p><h2>팀 순위</h2></div><span class="section-note">완료 처리된 경기 기준</span></div>
+      <div class="table-wrap">
+        <table class="data-table" aria-label="팀 순위">
+          <thead><tr><th>#</th><th>팀</th><th>경기</th><th>승</th><th>무</th><th>패</th><th>승률</th></tr></thead>
+          <tbody id="standingsBody"></tbody>
+        </table>
+      </div>
+      <p class="footnote">현재는 예시 데이터입니다. 공식 승차·동률 규칙은 CPL 규칙 확인 후 확정합니다.</p>
+    </section>
+
+    <section class="section page-section" id="games">
+      <div class="section-heading"><div><p class="eyebrow">SCORES & FIXTURES</p><h2>경기 일정 · 결과</h2></div><span class="section-note">최근 경기</span></div>
+      <div id="gamesList" class="game-list"></div>
+    </section>
+
+    <section class="section page-section" id="players">
+      <div class="section-heading"><div><p class="eyebrow">PLAYER LEADERS</p><h2>선수 기록</h2></div><span class="section-note">기록 입력 후 자동 집계</span></div>
+      <div id="playersGrid" class="players-grid"></div>
+      <p class="footnote">개인 누적 기록은 경기별 원본 기록이 입력된 뒤 집계합니다.</p>
+    </section>
+
+    <section class="section page-section playoffs" id="playoffs">
+      <div class="section-heading"><div><p class="eyebrow">ROAD TO THE TITLE</p><h2>포스트시즌</h2></div></div>
+      <div class="playoff-callout"><div class="trophy">🏆</div><div><h3>ONE SEASON. ONE CHAMPION.</h3><p>준플레이오프 → 상위 라운드 → CPL 챔피언십</p><small>대진과 진출 조건은 확정된 CPL 규정에 따라 연결됩니다.</small></div></div>
+    </section>
+
+    <section class="section page-section admin-section" id="admin">
+      <div class="section-heading"><div><p class="eyebrow">ADMIN WORKSPACE</p><h2>관리자 경기 입력 데모</h2></div><span class="demo-tag">LOCAL DEMO</span></div>
+      <div class="notice warning"><strong>주의</strong> 이 화면은 브라우저 안에서 동작을 시험하는 데모입니다. 실제 관리자 인증이나 서버 저장은 아직 연결되지 않았습니다. 공식 경기 기록이나 비밀번호를 입력하지 마세요.</div>
+      <form id="gameForm" class="admin-form">
+        <div class="form-grid">
+          <label>홈팀<select id="homeTeam" required></select></label>
+          <label>원정팀<select id="awayTeam" required></select></label>
+          <label>홈팀 점수<input id="homeScore" type="number" min="0" max="99" value="1" required></label>
+          <label>원정팀 점수<input id="awayScore" type="number" min="0" max="99" value="0" required></label>
+          <label>경기 상태<select id="gameStatus"><option value="completed">완료</option><option value="scheduled">예정</option><option value="postponed">연기</option><option value="cancelled">취소</option></select></label>
+          <label>경기 종류<select id="gameType"><option value="practice">연습경기</option><option value="regular">정규시즌</option><option value="allstar">올스타</option><option value="btm">BTM</option><option value="playoff">포스트시즌</option></select></label>
+        </div>
+        <label>메모<input id="gameNote" type="text" maxlength="140" placeholder="예: 연습경기 · 기록 확인 필요"></label>
+        <button class="button primary" type="submit">데모 결과 추가</button>
+        <p id="formMessage" class="form-message" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="brand footer-brand"><span class="brand-mark">C</span><span><strong>CPL 2.0</strong><small>CHEONJUNG PREMIER LEAGUE</small></span></div>
+    <p>ONE SEASON. ONE CHAMPION.</p>
+    <small>초기 시제품 · 실제 데이터베이스 미연결</small>
+  </footer>
+
+  <nav class="mobile-nav" aria-label="모바일 빠른 메뉴">
+    <a href="#home"><span>⌂</span>홈</a><a href="#games"><span>▤</span>경기</a><a href="#standings"><span>▥</span>순위</a><a href="#players"><span>♙</span>선수</a><a href="#admin"><span>⚙</span>관리</a>
+  </nav>
+  <script src="./assets/app.js"></script>
+</body>
+</html>
